@@ -22,20 +22,21 @@ var Board = function( selector ) {
       $("#board").append(postit.element);
 
       $(".header").on("mousedown", function(){
-            $(".post-it").draggable();
-
+            $selec = $(this).parent();
+            $selec.draggable({ stack: "#master" }); // stack ayuda a poner al frente los post-it
         });
 
-      $(".header").on("mouseup", function(){
-            $(".post-it").draggable("destroy");
-
-        })
+      $(".header").on("mouseup", function(event){
+          event.preventDefault(); 
+          $selec.draggable("destroy");
+          
+        });
 
       $(".close").click(function(){
         // console.log(this);
-        $(this).parent().parent().addClass("delete")
+        $(this).parent().parent().addClass("delete");
         $(".delete").remove();
-      })
+        });
 
     });
 
@@ -46,6 +47,6 @@ var Board = function( selector ) {
 
 var PostIt = function(x,y) {
   // Aquí va el código relacionado con un post-it       aqui abajo le da la posicion del mouse
-  this.element = "<div id='master' class='post-it' style='left:"+x+"px; top:"+y+"px;'><div class='header'><div class='close'>X</div></div><div class='content' contenteditable='true'>...New</div></div>"
+  this.element = "<div id='master' class='post-it' style='left:"+x+"px; top:"+y+"px; '><div class='header'><div class='close'>X</div></div><div class='content' contenteditable='true'>...New</div></div>"
 };
 
